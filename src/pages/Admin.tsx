@@ -62,6 +62,7 @@ interface ClientRow {
   template_type: string | null;
   questions_count: number;
   setup_score: number;
+  lead_count: number;
 }
 
 interface LeadRow {
@@ -339,7 +340,7 @@ export default function Admin() {
                 <table className="w-full text-sm" style={{ color: C.body }}>
                   <thead>
                     <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                      {['Email', 'Business', 'Status', 'Quiz', 'Last login', 'Setup', 'Actions'].map((h) => (
+                      {['Email', 'Business', 'Status', 'Quiz', 'Last login', 'Setup', 'Leads', 'Actions'].map((h) => (
                         <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>{h}</th>
                       ))}
                     </tr>
@@ -365,6 +366,11 @@ export default function Admin() {
                         <td className="px-4 py-3">
                           <span className="text-xs font-mono" style={{ color: c.setup_score >= 4 ? C.green : c.setup_score >= 2 ? C.amber : C.muted }}>
                             {c.setup_score}/5
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="text-xs font-mono" style={{ color: c.lead_count > 0 ? '#22C55E' : 'rgba(255,255,255,0.6)' }}>
+                            {c.lead_count}
                           </span>
                         </td>
                         <td className="px-4 py-3">
@@ -463,7 +469,7 @@ export default function Admin() {
                       </tr>
                     ))}
                     {clients.length === 0 && (
-                      <tr><td colSpan={7} className="px-4 py-8 text-center" style={{ color: C.muted }}>No clients yet</td></tr>
+                      <tr><td colSpan={8} className="px-4 py-8 text-center" style={{ color: C.muted }}>No clients yet</td></tr>
                     )}
                   </tbody>
                 </table>
