@@ -100,7 +100,7 @@ const COMPARISON = {
     { label: 'Year 1 cost', pq: '$97', interact: '$324+', scoreapp: '$348+', leadquizzes: '$444+' },
     { label: 'Year 2 cost', pq: '$0', interact: '$324+', scoreapp: '$348+', leadquizzes: '$444+' },
     { label: 'Monthly fee', pq: 'None, ever', interact: 'From $27/mo', scoreapp: 'From $29/mo', leadquizzes: 'From $37/mo' },
-    { label: 'Response limits', pq: 'None', interact: '500/mo on Lite', scoreapp: '100/mo on Starter', leadquizzes: '100/mo on Startup' },
+    { label: 'Response limits', pq: '500/mo', interact: '500/mo on Lite', scoreapp: '100/mo on Starter', leadquizzes: '100/mo on Startup' },
     { label: 'Webhook / CRM integration', pq: 'Yes', interact: 'Yes (paid plans)', scoreapp: 'Yes (paid plans)', leadquizzes: 'Yes (paid plans)' },
     { label: 'Requires WordPress', pq: 'No', interact: 'No', scoreapp: 'No', leadquizzes: 'No' },
   ],
