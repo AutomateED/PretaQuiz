@@ -469,7 +469,7 @@ export default function Admin() {
                       </tr>
                     ))}
                     {clients.length === 0 && (
-                      <tr><td colSpan={7} className="px-4 py-8 text-center" style={{ color: C.muted }}>No clients yet</td></tr>
+                      <tr><td colSpan={8} className="px-4 py-8 text-center" style={{ color: C.muted }}>No clients yet</td></tr>
                     )}
                   </tbody>
                 </table>
