@@ -369,6 +369,11 @@ export default function Admin() {
                           </span>
                         </td>
                         <td className="px-4 py-3">
+                          <span className="text-xs font-mono" style={{ color: c.lead_count > 0 ? '#22C55E' : 'rgba(255,255,255,0.6)' }}>
+                            {c.lead_count}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
                           <div className="flex items-center gap-1">
                             <Tooltip>
                               <TooltipTrigger asChild>
