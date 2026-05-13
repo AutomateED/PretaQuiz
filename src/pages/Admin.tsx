@@ -62,6 +62,7 @@ interface ClientRow {
   template_type: string | null;
   questions_count: number;
   setup_score: number;
+  lead_count: number;
 }
 
 interface LeadRow {
