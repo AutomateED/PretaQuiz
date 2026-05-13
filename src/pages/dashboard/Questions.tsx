@@ -119,6 +119,27 @@ export default function Questions({ config, onConfigChange, userId, quizId }: Qu
           </div>
         ))}
       </div>
+
+      <div className="mt-10 max-w-[800px] rounded-xl overflow-hidden" style={{ backgroundColor: 'rgba(217,70,239,0.08)' }}>
+        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+          <iframe
+            src="https://www.youtube.com/embed/CNhaPFePdqw"
+            frameBorder="0"
+            allowFullScreen
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            title="How to add your questions and answers"
+          />
+        </div>
+      </div>
+
+      <button
+        onClick={() => window.open('https://www.youtube.com/watch?v=CNhaPFePdqw', 'pretaquiz-video', 'width=480,height=270')}
+        className="flex items-center gap-1.5 text-xs font-medium mt-2 transition-colors hover:opacity-80"
+        style={{ color: '#D946EF' }}
+      >
+        <PictureInPicture2 className="h-3.5 w-3.5" />
+        Pop out video
+      </button>
     </div>
   );
 }
