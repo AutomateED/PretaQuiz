@@ -340,7 +340,7 @@ export default function Admin() {
                 <table className="w-full text-sm" style={{ color: C.body }}>
                   <thead>
                     <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                      {['Email', 'Business', 'Status', 'Quiz', 'Last login', 'Setup', 'Actions'].map((h) => (
+                      {['Email', 'Business', 'Status', 'Quiz', 'Last login', 'Setup', 'Leads', 'Actions'].map((h) => (
                         <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>{h}</th>
                       ))}
                     </tr>
