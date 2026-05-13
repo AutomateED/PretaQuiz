@@ -91,31 +91,37 @@ export type Database = {
       }
       clients: {
         Row: {
+          account_tier: string
           business_name: string
           created_at: string | null
           email: string
           id: string
           last_login: string | null
+          monthly_lead_cap: number
           notes: string
           subscription_status: string
           template_type: string | null
         }
         Insert: {
+          account_tier?: string
           business_name?: string
           created_at?: string | null
           email: string
           id?: string
           last_login?: string | null
+          monthly_lead_cap?: number
           notes?: string
           subscription_status?: string
           template_type?: string | null
         }
         Update: {
+          account_tier?: string
           business_name?: string
           created_at?: string | null
           email?: string
           id?: string
           last_login?: string | null
+          monthly_lead_cap?: number
           notes?: string
           subscription_status?: string
           template_type?: string | null
@@ -360,7 +366,8 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      check_lead_cap: { Args: { p_client_id: string }; Returns: boolean }
+      get_monthly_lead_count: { Args: { p_client_id: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never
