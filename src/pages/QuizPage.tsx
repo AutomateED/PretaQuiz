@@ -101,43 +101,56 @@ export default function QuizPage() {
     // Insert lead into Supabase (fire-and-forget, never blocks confirmation)
     if (!config.clientId) {
       console.warn('Skipping lead insert: missing clientId for slug', slug);
-    } else {
+} else {
+      // Check lead cap before inserting - standard tier: 500/month. Founding: unlimited.
+      // check_lead_cap returns true if under cap (allow), false if over cap (skip).
+      // The prospect always sees their result - we never block the confirmation screen.
       supabase
-        .from('leads')
-        .insert({
-          client_id: config.clientId,
-          quiz_slug: slug!,
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          result_type: resultType,
-          answers: quiz.answers,
-        })
-        .then(({ error: insertError }) => {
-          if (insertError) {
-            console.error('Lead insert failed:', insertError);
-            // Notify server-side via fire-webhook so we have a record of the failure
-            fetch('https://sgllwxhabdhjldhpnnsg.supabase.co/functions/v1/fire-webhook', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                slug: slug!,
-                payload: {
-                  lead_insert_failed: true,
-                  first_name: firstName,
-                  last_name: lastName,
-                  email,
-                  result_type: resultType,
-                  result_copy: resultCopy,
-                  answers: quiz.answers,
-                  quiz_name: config.quizName || config.businessName,
-                  client_name: config.businessName,
-                  timestamp: new Date().toISOString(),
-                  error_message: insertError.message,
-                },
-              }),
-            }).catch(() => {});
+        .rpc('check_lead_cap', { p_client_id: config.clientId })
+        .then(({ data: underCap, error: capError }) => {
+          if (capError) {
+            console.warn('Lead cap check failed, inserting anyway:', capError);
           }
+          if (underCap === false) {
+            console.warn('Lead cap reached for client', config.clientId, '- skipping insert');
+            return;
+          }
+          supabase
+            .from('leads')
+            .insert({
+              client_id: config.clientId,
+              quiz_slug: slug!,
+              first_name: firstName,
+              last_name: lastName,
+              email,
+              result_type: resultType,
+              answers: quiz.answers,
+            })
+            .then(({ error: insertError }) => {
+              if (insertError) {
+                console.error('Lead insert failed:', insertError);
+                fetch('https://sgllwxhabdhjldhpnnsg.supabase.co/functions/v1/fire-webhook', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    slug: slug!,
+                    payload: {
+                      lead_insert_failed: true,
+                      first_name: firstName,
+                      last_name: lastName,
+                      email,
+                      result_type: resultType,
+                      result_copy: resultCopy,
+                      answers: quiz.answers,
+                      quiz_name: config.quizName || config.businessName,
+                      client_name: config.businessName,
+                      timestamp: new Date().toISOString(),
+                      error_message: insertError.message,
+                    },
+                  }),
+                }).catch(() => {});
+              }
+            });
         });
     }
 
