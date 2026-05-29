@@ -26,38 +26,9 @@ import Waitlist from "./pages/Waitlist";
 import BlogIndex from "./pages/BlogIndex";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
+import HelpChat from "@/components/HelpChat";
 
 const queryClient = new QueryClient();
-
-function ChatWidget() {
-  const location = useLocation();
-  const isDashboard = location.pathname.startsWith('/dashboard');
-
-  useEffect(() => {
-    if (!isDashboard) return;
-
-    const styleId = 'lc-chat-widget-style';
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      // Hide widget by default; .lc-chat-visible is added when user clicks "Need help?"
-      style.textContent = `chat-widget { display: none !important; } body.lc-chat-visible chat-widget { display: block !important; }`;
-      document.head.appendChild(style);
-    }
-
-    const scriptId = 'lc-chat-widget';
-    if (document.getElementById(scriptId)) return;
-
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.src = 'https://beta.leadconnectorhq.com/loader.js';
-    script.setAttribute('data-resources-url', 'https://beta.leadconnectorhq.com/chat-widget/loader.js');
-    script.setAttribute('data-widget-id', '69f8693dcc1c63fa34320786');
-    document.body.appendChild(script);
-  }, [isDashboard]);
-
-  return null;
-}
 
 const App = () => (
   <Sentry.ErrorBoundary fallback={<p>Something went wrong. Please refresh.</p>}>
@@ -91,7 +62,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
-        <ChatWidget />
+        <HelpChat />
         <CookieConsent />
       </BrowserRouter>
       </TooltipProvider>
