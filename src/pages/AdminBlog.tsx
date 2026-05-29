@@ -181,8 +181,11 @@ export default function AdminBlog() {
     if (!ok) return;
     setDeploying(true);
     try {
-      await fetch('https://api.vercel.com/v1/integrations/deploy/prj_zGytd5NUYuixbFbn3P2wUp9fwvWq/FhS5Mhv0cs', {
+      const session = await supabase.auth.getSession();
+      const token = session.data.session?.access_token;
+      await fetch('https://sgllwxhabdhjldhpnnsg.supabase.co/functions/v1/trigger-deploy', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       });
       toast({ title: 'Deploy triggered!' });
     } catch (err: any) {
