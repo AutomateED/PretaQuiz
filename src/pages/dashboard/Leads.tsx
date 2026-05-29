@@ -306,6 +306,14 @@ export default function Leads() {
             </Select>
           )}
         </div>
+        {leads.length > 0 && (
+          <p className="text-xs mt-1" style={{ color: '#9A8EAA' }}>
+            Tip: filter by result type first, then download to get a segmented list ready to import.{' '}
+            <a href="/dashboard/integrations" style={{ color: '#D946EF' }}>
+              How to import into your CRM
+            </a>
+          </p>
+        )}
       </div>
 
       {filtered.length === 0 ? (
