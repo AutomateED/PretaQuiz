@@ -60,7 +60,7 @@ const INCLUDED = [
   'Webhook integration to send leads to any CRM or email platform',
   'Mobile-responsive design that works on every device',
   '500 leads per month included. No per-lead fees',
-  'No monthly fees, ever',
+  'Founding member price: $97 one-time. After the first 100 customers: $97/year',
   'Hosted for you. No WordPress, no domain setup, no tech headaches',
 ];
 
@@ -98,7 +98,7 @@ const NICHE_EXAMPLES = [
 const COMPARISON = {
   rows: [
     { label: 'Year 1 cost', pq: '$97', interact: '$324+', scoreapp: '$348+', leadquizzes: '$444+' },
-    { label: 'Year 2 cost', pq: '$0', interact: '$324+', scoreapp: '$348+', leadquizzes: '$444+' },
+    { label: 'Year 2 cost', pq: '$97/yr*', interact: '$324+', scoreapp: '$348+', leadquizzes: '$444+' },
     { label: 'Monthly fee', pq: 'None, ever', interact: 'From $27/mo', scoreapp: 'From $29/mo', leadquizzes: 'From $37/mo' },
     { label: 'Response limits', pq: '500/mo', interact: '500/mo on Lite', scoreapp: '100/mo on Starter', leadquizzes: '100/mo on Startup' },
     { label: 'Webhook / CRM integration', pq: 'Yes', interact: 'Yes (paid plans)', scoreapp: 'Yes (paid plans)', leadquizzes: 'Yes (paid plans)' },
@@ -183,7 +183,7 @@ function StickyNav({ onCheckout, loading, error }: { onCheckout: () => void; loa
               className="text-sm font-semibold text-white px-5 py-2.5 rounded-lg transition-all hover:shadow-lg active:scale-[0.98]"
               style={{ backgroundColor: C.cta }}
             >
-              {loading ? 'Redirecting…' : 'Get PretaQuiz - $97'}
+              {loading ? 'Redirecting…' : 'Get PretaQuiz — $97 founding price'}
             </button>
             {error && (
               <p className="mt-1 text-xs text-center" style={{ color: '#F87171' }}>
@@ -211,13 +211,13 @@ export default function HomePage() {
   }, [navigate]);
 
   useEffect(() => {
-    document.title = 'PretaQuiz: Lead Generation Quiz Builder for Coaches | $97 One-Time';
+    document.title = 'PretaQuiz: Lead Generation Quiz Builder for Coaches | $97 Founding Member Price';
     const setMeta = (attr: string, key: string, content: string) => {
       let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('name', 'description', 'Create a branded lead-generation quiz for your coaching or consulting business. No monthly fees. No tech skills. Live in under an hour. $97 one-time payment.');
+    setMeta('name', 'description', 'Create a branded lead-generation quiz for your coaching or consulting business. No tech skills. Live in under an hour. $97 one-time founding member price — first 100 customers only.');
 
     const jsonLd = {
       '@context': 'https://schema.org',
@@ -319,7 +319,7 @@ export default function HomePage() {
             <span className="block mt-1">Are any of them becoming leads?</span>
           </motion.h1>
           <motion.p variants={fadeUp} className="mt-6 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: C.body }}>
-            PretaQuiz gives coaches and consultants a branded lead-generation quiz they can make their own. No tech skills. No monthly fees. Live in under an hour.
+            PretaQuiz gives coaches and consultants a branded lead-generation quiz they can make their own. No tech skills. Live in under an hour. $97 one-time for the first 100 customers.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-10">
             <div className="inline-flex flex-col items-stretch" style={{ gap: '12px' }}>
@@ -329,7 +329,7 @@ export default function HomePage() {
                 className="text-lg font-semibold text-white px-8 py-4 rounded-xl transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
                 style={{ backgroundColor: C.cta }}
               >
-                {checkoutLoading ? 'Redirecting…' : 'Get PretaQuiz - $97 one-time'}
+                {checkoutLoading ? 'Redirecting…' : 'Get PretaQuiz — $97 founding price'}
               </button>
               <a
                 href="/quiz/pretaquiz"
@@ -352,7 +352,7 @@ export default function HomePage() {
                 Something went wrong. Please try again or email hello@pretaquiz.com.
               </p>
             )}
-            <p className="mt-4 text-sm" style={{ color: C.supporting }}>No subscription. No hidden costs. Pay once, it's yours.</p>
+            <p className="mt-4 text-sm" style={{ color: C.supporting }}>Founding member offer: $97 one-time. After the first 100 customers: $97/year.</p>
           </motion.div>
         </div>
       </Section>
@@ -388,7 +388,7 @@ export default function HomePage() {
       <Section className="py-20 px-5" style={{ backgroundColor: C.pageBg }}>
         <div className="max-w-5xl mx-auto">
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold leading-tight text-center" style={{ color: C.headline }}>
-            A branded quiz funnel you own for a one-time price.
+            A branded quiz funnel — yours for a founding member price.
           </motion.h2>
           <div className="mt-12 flex flex-col md:flex-row gap-10">
             {/* Left column – features */}
@@ -410,12 +410,13 @@ export default function HomePage() {
             {/* Right column – price highlight */}
             <motion.div variants={fadeUp} className="md:basis-2/5">
               <div className="rounded-2xl p-8 text-center" style={{ backgroundColor: C.cardBg, border: `1px solid ${C.cardBorder}` }}>
+                <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: C.accent }}>Founding Member Price</p>
                 <p className="text-5xl font-bold" style={{ color: C.accent }}>$97</p>
                 <p className="text-sm font-medium mt-2" style={{ color: C.headline }}>one-time payment</p>
                 <div className="my-5 h-px" style={{ backgroundColor: C.cardBorder }} />
                 <div className="space-y-2 text-sm" style={{ color: C.supporting }}>
-                  <p>No monthly fees</p>
-                  <p>No limits on leads</p>
+                  <p>First 100 customers only</p>
+                  <p>After that: $97/year</p>
                   <p>No tech skills needed</p>
                 </div>
               </div>
@@ -600,7 +601,7 @@ export default function HomePage() {
           </motion.div>
 
           <motion.p variants={fadeUp} className="mt-6 text-xs text-center" style={{ color: C.footnote }}>
-            Competitor pricing based on publicly listed annual billing rates as of April 2026. Prices may vary.
+            *First 100 customers get lifetime access at $97 one-time (founding member price). After that: $97/year. Competitor pricing based on publicly listed annual billing rates as of April 2026. Prices may vary.
           </motion.p>
         </div>
       </Section>
@@ -665,10 +666,10 @@ export default function HomePage() {
       <Section className="py-24 px-5" style={{ backgroundColor: C.sectionBg }}>
         <div className="max-w-3xl mx-auto text-center">
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold leading-tight" style={{ color: C.headline }}>
-            $97. Once. Done.
+            $97 once. Yours for life. First 100 customers only.
           </motion.h2>
           <motion.p variants={fadeUp} className="mt-6 text-lg leading-relaxed" style={{ color: C.body }}>
-            Stop paying monthly for a quiz tool. Get PretaQuiz, brand it, write your questions, and start collecting leads today.
+            The founding member price is $97 one-time. After the first 100 customers, it moves to $97/year. Get in now and it's yours for life.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-10">
             <button
@@ -677,14 +678,14 @@ export default function HomePage() {
               className="text-lg font-semibold text-white px-8 py-4 rounded-xl transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
               style={{ backgroundColor: C.cta }}
             >
-              {checkoutLoading ? 'Redirecting…' : 'Get PretaQuiz - $97 one-time'}
+              {checkoutLoading ? 'Redirecting…' : 'Get PretaQuiz — $97 founding price'}
             </button>
             {checkoutError && (
               <p className="mt-2 text-sm" style={{ color: '#F87171' }}>
                 Something went wrong. Please try again or email hello@pretaquiz.com.
               </p>
             )}
-            <p className="mt-4 text-sm" style={{ color: C.footnote }}>One-time payment. No subscription. No upsells.</p>
+            <p className="mt-4 text-sm" style={{ color: C.footnote }}>After the first 100 customers: $97/year. No upsells.</p>
           </motion.div>
         </div>
       </Section>
