@@ -67,9 +67,9 @@ export default function HelpChat() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Don't show on quiz pages
-  const isQuizPage = location.pathname.startsWith('/quiz/');
-  if (isQuizPage) return null;
+  // Only show on dashboard pages
+  const isDashboardPage = location.pathname.startsWith('/dashboard');
+  if (!isDashboardPage) return null;
 
   const currentPage = location.pathname;
   const suggestions = PAGE_SUGGESTIONS[currentPage] || DEFAULT_SUGGESTIONS;
