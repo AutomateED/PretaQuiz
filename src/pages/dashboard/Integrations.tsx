@@ -52,7 +52,7 @@ const GUIDES: Guide[] = [
     docsUrl: 'https://zapier.com/apps/webhook/integrations',
     docsLabel: 'Zapier Webhooks documentation',
     steps: [
-      { title: 'Go to zapier.com and click Create Zap', detail: 'Log in to your Zapier account and click the orange Create Zap button in the top left.' },
+      { title: 'Go to zapier.com and click Create Zap', detail: 'Log in to your Zapier account and click the orange Create Zap button in the top left. Note: Webhooks by Zapier requires a paid Zapier plan (from $19.99/month). The free plan does not include webhook triggers.' },
       { title: 'Choose Webhooks by Zapier as the trigger', detail: 'Search for Webhooks by Zapier in the trigger search box. Select it, then choose Catch Hook as the trigger event. Click Continue.' },
       { title: 'Copy your webhook URL', detail: 'Zapier will generate a unique webhook URL. It looks like: https://hooks.zapier.com/hooks/catch/123456/abcdef/ — copy this URL. This is what you paste into PretaQuiz.' },
       { title: 'Paste it into PretaQuiz and save', detail: 'Paste the URL into the webhook field above and click Save. Then complete a test run of your quiz so Zapier can see a real data sample.' },
@@ -86,7 +86,8 @@ const GUIDES: Guide[] = [
     docsUrl: 'https://help.gohighlevel.com/support/solutions/articles/48001156940',
     docsLabel: 'HighLevel Webhooks documentation',
     steps: [
-      { title: 'Log in to HighLevel and go to Automation then Workflows', detail: 'From your HighLevel sub-account, click Automation in the left sidebar, then Workflows.' },
+      { title: 'Enable LC Premium Triggers in your Agency settings first', detail: 'The Inbound Webhook is a Premium Trigger in HighLevel. Go to Agency Settings then LC Premium Triggers and Actions and enable it. You get 100 free executions, then $0.01 per execution after that. For most coaches receiving under 500 leads a month this works out to a few dollars at most.' },
+      { title: 'Go to Automation then Workflows in your sub-account', detail: 'From your HighLevel sub-account, click Automation in the left sidebar, then Workflows.' },
       { title: 'Create a new workflow and add a Webhook Trigger', detail: 'Click Create Workflow, give it a name like PretaQuiz Leads, and add a Webhook as the starting trigger. HighLevel will generate a unique inbound webhook URL for that workflow.' },
       { title: 'Copy the webhook URL and paste it into PretaQuiz', detail: 'Copy the URL HighLevel provides and paste it into the webhook field above. Click Save, then run a test quiz submission.' },
       { title: 'Add a Create or Update Contact action', detail: 'Back in your HighLevel workflow, add a Create or Update Contact action after the webhook trigger. Map first_name, last_name, and email from the PretaQuiz payload.' },
@@ -363,6 +364,55 @@ export default function Integrations({ config, onConfigChange, userId, quizId }:
         </a>{' '}
         and we will add a guide for it.
       </p>
+
+      {/* CSV import section */}
+      <div className="mt-10 pt-8" style={{ borderTop: `1px solid ${C.border}` }}>
+        <h2 className="text-base font-semibold mb-1" style={{ color: C.headline }}>
+          Prefer to import manually?
+        </h2>
+        <p className="text-sm mb-5" style={{ color: C.supporting }}>
+          No webhook needed. Download your leads as a CSV from the{' '}
+          <a href="/dashboard/leads" style={{ color: C.accent }}>Leads page</a>
+          {' '}and import directly into your tool. Filter by result type first to get a segmented list.
+        </p>
+        <div className="space-y-3">
+          {[
+            {
+              tool: 'HighLevel',
+              steps: 'Contacts → Import → Upload CSV → Map first_name, last_name, email → Import. Then add a tag manually to the imported batch.',
+            },
+            {
+              tool: 'Mailchimp',
+              steps: 'Audience → Add Contacts → Import Contacts → Upload CSV → Map fields → Tag the import with the result type.',
+            },
+            {
+              tool: 'Flodesk',
+              steps: 'Subscribers → Import → Upload CSV → Map fields → Assign to a segment matching the result type.',
+            },
+            {
+              tool: 'Kit (ConvertKit)',
+              steps: 'Subscribers → Import Subscribers → Upload CSV → Map fields → Add a tag for the result type during import.',
+            },
+            {
+              tool: 'ActiveCampaign',
+              steps: 'Contacts → Import → Upload CSV → Map fields → Add to a list and tag with result type.',
+            },
+            {
+              tool: 'Mailerlite',
+              steps: 'Subscribers → Import Subscribers → Upload CSV → Map fields → Assign to a group matching the result type.',
+            },
+          ].map((item) => (
+            <div
+              key={item.tool}
+              className="rounded-xl px-4 py-3"
+              style={{ backgroundColor: C.infoBg, border: `1px solid ${C.infoBorder}` }}
+            >
+              <p className="text-sm font-semibold mb-0.5" style={{ color: C.headline }}>{item.tool}</p>
+              <p className="text-sm" style={{ color: C.body }}>{item.steps}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
