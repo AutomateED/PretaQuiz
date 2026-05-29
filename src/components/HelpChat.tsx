@@ -191,13 +191,18 @@ export default function HelpChat() {
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className="max-w-[80%] rounded-2xl px-3 py-2 text-sm leading-relaxed"
+                  className="max-w-[80%] rounded-2xl px-3 py-2 text-[15px] leading-relaxed"
                   style={msg.role === 'user'
-                    ? { backgroundColor: '#F020B0', color: '#FFFFFF', borderBottomRightRadius: '4px' }
-                    : { backgroundColor: 'rgba(217,70,239,0.08)', color: '#0F0A1E', borderBottomLeftRadius: '4px' }
+                    ? { backgroundColor: '#F020B0', color: '#FFFFFF', borderBottomRightRadius: '4px', lineHeight: '1.6' }
+                    : { backgroundColor: 'rgba(217,70,239,0.08)', color: '#0F0A1E', borderBottomLeftRadius: '4px', lineHeight: '1.6' }
                   }
                 >
-                  {msg.content}
+                  {msg.content.split('\n').map((line, i) => (
+                    <span key={i}>
+                      {line}
+                      {i < msg.content.split('\n').length - 1 && <br />}
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}
