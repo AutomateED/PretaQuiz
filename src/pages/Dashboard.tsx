@@ -268,39 +268,7 @@ export default function Dashboard() {
         </Routes>
       </main>
 
-      {/* Fixed help button */}
-      <button
-        type="button"
-        onClick={() => {
-          // Reveal widget container
-          document.body.classList.add('lc-chat-visible');
 
-          const tryOpen = (attempt = 0) => {
-            const widget = document.querySelector('chat-widget') as HTMLElement | null;
-            const root = widget?.shadowRoot;
-            if (!root) {
-              if (attempt < 20) setTimeout(() => tryOpen(attempt + 1), 200);
-              return;
-            }
-            // Find any clickable element to open the widget
-            const target =
-              (root.querySelector('button') as HTMLElement | null) ||
-              (root.querySelector('[role="button"]') as HTMLElement | null) ||
-              (root.querySelector('div[class*="launcher" i], div[class*="bubble" i], div[class*="chat-icon" i]') as HTMLElement | null) ||
-              (root.firstElementChild as HTMLElement | null);
-            if (target) {
-              target.click();
-            } else if (attempt < 20) {
-              setTimeout(() => tryOpen(attempt + 1), 200);
-            }
-          };
-          tryOpen();
-        }}
-        className="fixed bottom-6 right-6 z-50 rounded-full px-4 py-2 text-sm font-semibold text-white shadow-lg transition-opacity hover:opacity-90"
-        style={{ backgroundColor: '#D946EF' }}
-      >
-        Need help?
-      </button>
     </div>
   );
 }
