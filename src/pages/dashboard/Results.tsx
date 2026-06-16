@@ -24,13 +24,18 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
 
   const [localTitles, setLocalTitles] = useState<Record<string, string>>({ ...titles });
   const [texts, setTexts] = useState<Record<string, string>>({ ...config.resultTexts });
+  const [ctas, setCtas] = useState<Record<string, { cta_text: string; cta_url: string }>>(
+    () => ({ ...config.resultCtas })
+  );
   const [savingType, setSavingType] = useState<string | null>(null);
 
   const localTitlesRef = useRef(localTitles);
   const textsRef = useRef(texts);
+  const ctasRef = useRef(ctas);
 
   localTitlesRef.current = localTitles;
   textsRef.current = texts;
+  ctasRef.current = ctas;
 
   const handleTitleChange = (letter: string, value: string) => {
     setLocalTitles((prev) => ({ ...prev, [letter]: value }));
@@ -40,11 +45,19 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
     setTexts((prev) => ({ ...prev, [title]: value }));
   };
 
+  const handleCtaChange = (letter: string, field: 'cta_text' | 'cta_url', value: string) => {
+    setCtas((prev) => ({
+      ...prev,
+      [letter]: { ...(prev[letter] || { cta_text: '', cta_url: '' }), [field]: value },
+    }));
+  };
+
   const handleSaveOne = async (letter: string) => {
     setSavingType(letter);
 
     const currentTitles = localTitlesRef.current;
     const currentTexts = textsRef.current;
+    const currentCtas = ctasRef.current;
 
     const originalTitle = titles[letter as keyof typeof titles];
     const newTitle = currentTitles[letter];
@@ -66,6 +79,7 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
       .update({
         result_titles: updatedTitles as any,
         result_texts: updatedTexts as any,
+        result_ctas: currentCtas as any,
       })
       .eq('id', quizId);
 
@@ -79,6 +93,7 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
               ...prev,
               resultTitles: updatedTitles as QuizConfig['resultTitles'],
               resultTexts: updatedTexts,
+              resultCtas: currentCtas,
             }
           : prev
       );
@@ -120,6 +135,24 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
                   rows={6}
                   value={textValue}
                   onChange={(e) => handleTextChange(localTitles[letter], e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="text-sm">CTA button text</Label>
+                <Input
+                  value={ctas[letter]?.cta_text || ''}
+                  onChange={(e) => handleCtaChange(letter, 'cta_text', e.target.value)}
+                  placeholder="e.g. Book a free discovery call"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="text-sm">CTA URL</Label>
+                <Input
+                  value={ctas[letter]?.cta_url || ''}
+                  onChange={(e) => handleCtaChange(letter, 'cta_url', e.target.value)}
+                  placeholder="https://calendly.com/yourlink"
                 />
               </div>
 
