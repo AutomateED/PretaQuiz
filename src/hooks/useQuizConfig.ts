@@ -62,6 +62,10 @@ export function useQuizConfig(slug: string | undefined): UseQuizConfigReturn {
           ...DEFAULT_CONFIG.resultTexts,
           ...(data.result_texts as Record<string, string> || {}),
         },
+        resultCtas: {
+          ...DEFAULT_CONFIG.resultCtas,
+          ...((data as any).result_ctas as Record<string, { cta_text: string; cta_url: string }> || {}),
+        },
         ctaText: data.cta_text || DEFAULT_CONFIG.ctaText,
         ctaUrl: data.cta_url || DEFAULT_CONFIG.ctaUrl,
         ctaTagline: data.cta_tagline || DEFAULT_CONFIG.ctaTagline,
