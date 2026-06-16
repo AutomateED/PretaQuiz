@@ -11,6 +11,14 @@ interface ConfirmationScreenProps {
 export default function ConfirmationScreen({ config, email, resultType, resultCopy }: ConfirmationScreenProps) {
   const brandColour = config.brandColour;
 
+  const resultLetter = (Object.entries(config.resultTitles).find(
+    ([, title]) => title === resultType
+  )?.[0]) as 'A' | 'B' | 'C' | 'D' | undefined;
+
+  const perResultCta = resultLetter ? config.resultCtas?.[resultLetter] : undefined;
+  const ctaText = perResultCta?.cta_text?.trim() || config.ctaText;
+  const ctaUrl  = perResultCta?.cta_url?.trim()  || config.ctaUrl;
+
   return (
     <div className="flex min-h-[100dvh] items-center justify-center px-6 py-12" style={{ backgroundColor: '#FFFFFF' }}>
       <motion.div
@@ -69,18 +77,18 @@ export default function ConfirmationScreen({ config, email, resultType, resultCo
             </p>
           )}
 
-          {config.ctaUrl && config.ctaText && (
+          {ctaUrl && ctaText && (
             <motion.a
-              href={config.ctaUrl}
+              href={ctaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${config.ctaText} (opens in new tab)`}
+              aria-label={`${ctaText} (opens in new tab)`}
               className="mt-2 inline-block rounded-full px-10 py-4 text-lg font-semibold tracking-wide transition-all duration-300 hover:shadow-lift active:scale-95"
               style={{ backgroundColor: brandColour || '#F020B0', color: '#FFFFFF' }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.96 }}
             >
-              {config.ctaText}
+              {ctaText}
             </motion.a>
           )}
         </div>
