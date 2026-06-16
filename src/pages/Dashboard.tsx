@@ -26,7 +26,7 @@ const NAV_ITEMS = [
   { label: 'Branding', path: 'branding', icon: Palette },
   { label: 'Questions', path: 'questions', icon: HelpCircle },
   { label: 'Results', path: 'results', icon: Trophy },
-  { label: 'CTA Settings', path: 'cta', icon: MousePointerClick },
+  
   { label: 'Preview', path: 'preview', icon: Eye },
   { label: 'Share', path: 'share', icon: Share2 },
   { label: 'Connect your CRM', path: 'integrations', icon: Plug },
