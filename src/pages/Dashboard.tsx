@@ -285,6 +285,7 @@ function mapRowToConfig(row: any): QuizConfig {
     questions: Array.isArray(row.questions) ? row.questions : [],
     resultTitles: (row.result_titles as any) || DEFAULT_CONFIG.resultTitles,
     resultTexts: (row.result_texts as any) || DEFAULT_CONFIG.resultTexts,
+    resultCtas: (row.result_ctas as any) || DEFAULT_CONFIG.resultCtas,
     ctaText: row.cta_text || '', ctaUrl: row.cta_url || '',
     ctaTagline: row.cta_tagline || '', webhookUrl: row.webhook_url || '',
     privacyPolicyUrl: row.privacy_policy_url || '',

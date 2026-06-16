@@ -15,6 +15,7 @@ export interface QuizConfig {
   questions: { id: number; text: string; options: { letter: string; text: string }[] }[];
   resultTitles: { A: string; B: string; C: string; D: string };
   resultTexts: Record<string, string>;
+  resultCtas: Record<string, { cta_text: string; cta_url: string }>;
   ctaText: string;
   ctaUrl: string;
   ctaTagline: string;
@@ -43,6 +44,15 @@ const DEFAULT_RESULTS: Record<string, string> = {
     "You've done the hard work of building a business that works, and now you're frustrated that it's not growing the way you know it should. You've hit a ceiling, and the strategies that got you here aren't getting you to the next level. This is one of the most exciting (and most common) places to be, because it means you're ready. What you need isn't more tactics. It's a strategic shift. A fresh perspective, a bolder offer, and the courage to step into the bigger version of your business that's waiting for you.",
 };
 
+const DEFAULT_RESULT_CTAS: Record<string, { cta_text: string; cta_url: string }> = {
+  A: { cta_text: '', cta_url: '' },
+  B: { cta_text: '', cta_url: '' },
+  C: { cta_text: '', cta_url: '' },
+  D: { cta_text: '', cta_url: '' },
+};
+
+export { DEFAULT_RESULT_CTAS };
+
 export { DEFAULT_RESULT_TITLES };
 
 export const DEFAULT_CONFIG: QuizConfig = {
@@ -60,6 +70,7 @@ export const DEFAULT_CONFIG: QuizConfig = {
   questions: [],
   resultTitles: DEFAULT_RESULT_TITLES,
   resultTexts: DEFAULT_RESULTS,
+  resultCtas: DEFAULT_RESULT_CTAS,
   ctaText: 'Book Your Free Discovery Call',
   ctaUrl: '',
   ctaTagline: "Ready to break through? Let's talk.",
@@ -83,6 +94,7 @@ export function useConfig() {
           ...parsed,
           resultTitles: { ...DEFAULT_RESULT_TITLES, ...parsed.resultTitles },
           resultTexts: { ...DEFAULT_RESULTS, ...parsed.resultTexts },
+          resultCtas: { ...DEFAULT_RESULT_CTAS, ...parsed.resultCtas },
         };
       }
     } catch {
