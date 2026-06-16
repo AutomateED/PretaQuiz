@@ -213,6 +213,7 @@ export type Database = {
           privacy_policy_url: string | null
           questions: Json
           quiz_name: string
+          result_ctas: Json | null
           result_texts: Json
           result_titles: Json | null
           slug: string
@@ -236,6 +237,7 @@ export type Database = {
           privacy_policy_url?: string | null
           questions?: Json
           quiz_name?: string
+          result_ctas?: Json | null
           result_texts?: Json
           result_titles?: Json | null
           slug: string
@@ -259,6 +261,7 @@ export type Database = {
           privacy_policy_url?: string | null
           questions?: Json
           quiz_name?: string
+          result_ctas?: Json | null
           result_texts?: Json
           result_titles?: Json | null
           slug?: string
@@ -315,6 +318,7 @@ export type Database = {
           privacy_policy_url: string | null
           questions: Json | null
           quiz_name: string | null
+          result_ctas: Json | null
           result_texts: Json | null
           result_titles: Json | null
           slug: string | null
@@ -332,6 +336,7 @@ export type Database = {
           privacy_policy_url?: string | null
           questions?: Json | null
           quiz_name?: string | null
+          result_ctas?: Json | null
           result_texts?: Json | null
           result_titles?: Json | null
           slug?: string | null
@@ -349,6 +354,7 @@ export type Database = {
           privacy_policy_url?: string | null
           questions?: Json | null
           quiz_name?: string | null
+          result_ctas?: Json | null
           result_texts?: Json | null
           result_titles?: Json | null
           slug?: string | null
