@@ -71,12 +71,6 @@ export default function ConfirmationScreen({ config, email, resultType, resultCo
             />
           )}
 
-          {config.ctaTagline && (
-            <p className="text-lg italic" style={{ color: '#6B5F80' }}>
-              {config.ctaTagline}
-            </p>
-          )}
-
           {ctaUrl && ctaText && (
             <motion.a
               href={ctaUrl}
