@@ -67,13 +67,6 @@ export default function HelpChat() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Only show on dashboard pages
-  const isDashboardPage = location.pathname.startsWith('/dashboard');
-  if (!isDashboardPage) return null;
-
-  const currentPage = location.pathname;
-  const suggestions = PAGE_SUGGESTIONS[currentPage] || DEFAULT_SUGGESTIONS;
-
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 100);
@@ -83,6 +76,13 @@ export default function HelpChat() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
+
+  // Only show on dashboard pages
+  const isDashboardPage = location.pathname.startsWith('/dashboard');
+  if (!isDashboardPage) return null;
+
+  const currentPage = location.pathname;
+  const suggestions = PAGE_SUGGESTIONS[currentPage] || DEFAULT_SUGGESTIONS;
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return;
