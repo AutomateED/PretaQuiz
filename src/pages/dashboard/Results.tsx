@@ -28,23 +28,6 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
     () => ({ ...config.resultCtas })
   );
   const [savingType, setSavingType] = useState<string | null>(null);
-  const [tagline, setTagline] = useState(config.ctaTagline || '');
-  const [savingTagline, setSavingTagline] = useState(false);
-
-  const handleSaveTagline = async () => {
-    setSavingTagline(true);
-    const { error } = await supabase
-      .from('quiz_configs')
-      .update({ cta_tagline: tagline })
-      .eq('id', quizId);
-    if (error) {
-      toast({ title: 'Save failed', description: error.message, variant: 'destructive' });
-    } else {
-      onConfigChange((prev) => (prev ? { ...prev, ctaTagline: tagline } : prev));
-      toast({ title: 'Tagline saved' });
-    }
-    setSavingTagline(false);
-  };
 
   const localTitlesRef = useRef(localTitles);
   const textsRef = useRef(texts);
@@ -123,29 +106,6 @@ export default function Results({ config, onConfigChange, userId, quizId }: Resu
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-1" style={{ color: '#0F0A1E' }}>Results</h1>
       <p className="mb-8" style={{ color: '#6B5F80' }}>Customise the result types and descriptions prospects see</p>
-
-      <div className="mb-10 max-w-[700px] space-y-3">
-        <Label className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#9A8EAA' }}>
-          Result screen tagline
-        </Label>
-        <div className="space-y-1">
-          <Label className="text-sm">CTA tagline</Label>
-          <Input
-            value={tagline}
-            onChange={(e) => setTagline(e.target.value)}
-            placeholder="e.g. Ready to break through? Let's talk."
-          />
-          <p className="text-xs" style={{ color: '#9A8EAA' }}>Shown above every CTA button on the result screen</p>
-        </div>
-        <Button
-          size="sm"
-          onClick={handleSaveTagline}
-          disabled={savingTagline}
-          style={{ backgroundColor: '#F020B0', color: '#FFFFFF' }}
-        >
-          {savingTagline ? 'Saving...' : 'Save tagline'}
-        </Button>
-      </div>
 
       <div className="max-w-[700px] space-y-8">
 
