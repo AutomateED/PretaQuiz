@@ -94,8 +94,15 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<Stats | null>(null);
   const [clients, setClients] = useState<ClientRow[]>([]);
-  const [leads, setLeads] = useState<LeadRow[]>([]);
   const [archived, setArchived] = useState<ArchivedRow[]>([]);
+
+  // Per-client leads drawer (GDPR: load on demand, clear on close)
+  const [drawerClient, setDrawerClient] = useState<ClientRow | null>(null);
+  const [drawerReason, setDrawerReason] = useState('');
+  const [drawerLeads, setDrawerLeads] = useState<DrawerLead[]>([]);
+  const [drawerTotal, setDrawerTotal] = useState(0);
+  const [drawerLoading, setDrawerLoading] = useState(false);
+  const [drawerLoaded, setDrawerLoaded] = useState(false);
   // Grant access form
   const [grantEmail, setGrantEmail] = useState('');
   const [grantName, setGrantName] = useState('');
