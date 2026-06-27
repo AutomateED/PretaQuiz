@@ -141,7 +141,7 @@ export default function Admin() {
       const data = await res.json();
       setStats(data.stats);
       setClients(data.clients);
-      setLeads(data.leads);
+      // leads are loaded per-client on demand via the drawer
       // Init notes
       const nm: Record<string, string> = {};
       data.clients.forEach((c: ClientRow) => { nm[c.id] = c.notes || ''; });
