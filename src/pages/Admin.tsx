@@ -5,8 +5,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
   RefreshCw, Users, UserCheck, Target, AlertTriangle, DollarSign,
-  KeyRound, Mail, Trash2, ExternalLink, ChevronDown, Shield, ArchiveRestore, Archive,
+  KeyRound, Mail, Trash2, ExternalLink, ChevronDown, Shield, ArchiveRestore, Archive, Loader2,
 } from 'lucide-react';
+import {
+  Sheet, SheetContent, SheetHeader, SheetTitle,
+} from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
