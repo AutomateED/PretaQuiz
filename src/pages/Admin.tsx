@@ -222,6 +222,46 @@ export default function Admin() {
     } catch { /* silent */ }
   }, [adminAction]);
 
+  const openLeadsDrawer = useCallback((c: ClientRow) => {
+    setDrawerClient(c);
+    setDrawerReason('');
+    setDrawerLeads([]);
+    setDrawerTotal(0);
+    setDrawerLoaded(false);
+  }, []);
+
+  const closeLeadsDrawer = useCallback(() => {
+    setDrawerClient(null);
+    setDrawerReason('');
+    setDrawerLeads([]);
+    setDrawerTotal(0);
+    setDrawerLoaded(false);
+    setDrawerLoading(false);
+  }, []);
+
+  const loadClientLeads = useCallback(async () => {
+    if (!drawerClient || drawerReason.trim().length < 5) return;
+    setDrawerLoading(true);
+    try {
+      const headers = await getHeaders();
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-client-leads`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ client_id: drawerClient.id, reason: drawerReason.trim() }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      setDrawerLeads(data.leads || []);
+      setDrawerTotal(data.total_count ?? (data.leads?.length || 0));
+      setDrawerLoaded(true);
+    } catch (err: any) {
+      toast({ title: 'Failed to load leads', description: err.message, variant: 'destructive' });
+    } finally {
+      setDrawerLoading(false);
+    }
+  }, [drawerClient, drawerReason, getHeaders, toast]);
+
+
   if (authLoading || !user || user.email !== ADMIN_EMAIL) {
     return (
       <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: C.bg }}>
