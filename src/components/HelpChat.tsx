@@ -185,6 +185,15 @@ export default function HelpChat() {
               </div>
             )}
 
+            <div className="flex justify-start">
+              <div
+                className="max-w-[80%] rounded-2xl px-3 py-2 text-[15px] leading-relaxed"
+                style={{ backgroundColor: 'rgba(217,70,239,0.08)', color: '#0F0A1E', borderBottomLeftRadius: '4px', lineHeight: '1.6' }}
+              >
+                {"Hi, I'm the PretaQuiz help assistant. I'm an AI, not a human — I can answer questions about how PretaQuiz works, help you set up your quiz, and point you to the right place in the dashboard. I don't see your leads or your customers' data. If you need a human, email hello@pretaquiz.com."}
+              </div>
+            </div>
+
             {messages.map((msg, i) => (
               <div
                 key={i}
