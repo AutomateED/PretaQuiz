@@ -68,16 +68,13 @@ interface ClientRow {
   lead_count: number;
 }
 
-interface LeadRow {
+interface DrawerLead {
   id: string;
   first_name: string | null;
   last_name: string | null;
   email: string;
   result_type: string | null;
-  quiz_slug: string;
   created_at: string;
-  client_email: string | null;
-  client_business: string | null;
 }
 
 interface ArchivedRow {
