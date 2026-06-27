@@ -48,13 +48,80 @@ const Dpa = () => (
       </ul>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">5. Sub-processors</h2>
-      <p>PretaQuiz uses the following sub-processors:</p>
-      <ul className="list-disc pl-6 space-y-1">
-        <li><strong>Supabase (AWS):</strong> Database hosting, authentication, Edge Functions. Location: EU (Frankfurt, eu-central-1)</li>
-        <li><strong>Stripe:</strong> Payment processing. Location: EU/US (EU-US Data Privacy Framework certified)</li>
-        <li><strong>Vercel:</strong> Website hosting and CDN. Location: Global CDN (US-based company)</li>
-      </ul>
-      <p>PretaQuiz will notify the Client before adding or replacing a sub-processor. The Client may object within 14 days. If the objection cannot be resolved, the Client may terminate their account.</p>
+      <p>PretaQuiz uses the following sub-processors to deliver the service. Each sub-processor is bound by a data processing agreement that meets the requirements of GDPR Article 28.</p>
+
+      <div className="my-4 overflow-x-auto rounded-xl" style={{ border: '1px solid rgba(217,70,239,0.15)' }}>
+        <table className="w-full text-sm" style={{ borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.15)' }}>
+              <th className="text-left py-3 px-4 font-semibold">Sub-processor</th>
+              <th className="text-left py-3 px-4 font-semibold">Purpose</th>
+              <th className="text-left py-3 px-4 font-semibold">Location</th>
+              <th className="text-left py-3 px-4 font-semibold">Transfer mechanism</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">Supabase</td>
+              <td className="py-3 px-4">Database, authentication, file storage</td>
+              <td className="py-3 px-4">EU (AWS Frankfurt)</td>
+              <td className="py-3 px-4">N/A — data stays in the EU</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">Lovable</td>
+              <td className="py-3 px-4">Development platform used to build and maintain PretaQuiz</td>
+              <td className="py-3 px-4">United States / EU</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">Vercel</td>
+              <td className="py-3 px-4">Application hosting and content delivery</td>
+              <td className="py-3 px-4">United States / global edge network</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">Stripe</td>
+              <td className="py-3 px-4">Payment processing</td>
+              <td className="py-3 px-4">United States</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">Resend</td>
+              <td className="py-3 px-4">Transactional email delivery (account emails, lead result emails)</td>
+              <td className="py-3 px-4">United States</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">Anthropic</td>
+              <td className="py-3 px-4">AI provider for the in-dashboard HelpChat assistant</td>
+              <td className="py-3 px-4">United States</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(217,70,239,0.08)' }}>
+              <td className="py-3 px-4">OpenAI</td>
+              <td className="py-3 px-4">AI provider for the in-dashboard HelpChat assistant</td>
+              <td className="py-3 px-4">United States</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+            <tr>
+              <td className="py-3 px-4">Sentry</td>
+              <td className="py-3 px-4">Error monitoring and crash reporting</td>
+              <td className="py-3 px-4">United States</td>
+              <td className="py-3 px-4">Standard Contractual Clauses</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>We will give you reasonable notice before adding or replacing a sub-processor. If you object to a new sub-processor on reasonable data protection grounds, you can terminate your subscription and receive a pro-rated refund for any unused period.</p>
+
+      <p>For the avoidance of doubt:</p>
+
+      <p>Anthropic and OpenAI only receive messages typed into HelpChat by you, the account holder. They do not receive any lead data, quiz answers, or end-user personal data.</p>
+
+      <p>Stripe handles payment information directly. PretaQuiz does not store card numbers, CVCs, or full payment credentials.</p>
+
+      <p>Resend receives the email address and content of transactional emails (account magic links, password resets, lead result emails). It does not receive lead quiz answers or other dashboard data.</p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">6. Security Measures</h2>
       <p>PretaQuiz implements the following measures:</p>
