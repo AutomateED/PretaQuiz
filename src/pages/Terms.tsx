@@ -64,6 +64,7 @@ const Terms = () => (
         <a href="/" className="text-primary hover:underline text-sm">&larr; Back to Home</a>
       </div>
     </div>
+    </div>
   </div>
 );
 
