@@ -650,6 +650,95 @@ export default function Admin() {
           </>
         )}
       </div>
+
+      <Sheet open={!!drawerClient} onOpenChange={(open) => { if (!open) closeLeadsDrawer(); }}>
+        <SheetContent
+          side="right"
+          className="sm:max-w-xl w-full overflow-y-auto"
+          style={{ backgroundColor: C.card, borderColor: C.border, color: C.body }}
+        >
+          <SheetHeader>
+            <SheetTitle style={{ color: C.white }}>
+              Leads for {drawerClient?.business_name || drawerClient?.email || ''}
+            </SheetTitle>
+          </SheetHeader>
+
+          <div className="mt-6 space-y-4">
+            <div>
+              <Label className="text-xs" style={{ color: C.muted }}>
+                Reason for accessing (logged for GDPR compliance) *
+              </Label>
+              <Textarea
+                value={drawerReason}
+                onChange={(e) => setDrawerReason(e.target.value.slice(0, 500))}
+                maxLength={500}
+                rows={3}
+                placeholder="e.g. customer support request, billing investigation…"
+                className="mt-1 resize-none text-sm"
+                style={{ backgroundColor: C.bg, borderColor: C.border, color: C.white }}
+              />
+              <div className="mt-1 text-xs text-right" style={{ color: C.muted }}>
+                {drawerReason.length}/500
+              </div>
+            </div>
+
+            <Button
+              onClick={loadClientLeads}
+              disabled={drawerReason.trim().length < 5 || drawerLoading}
+              style={{ backgroundColor: C.cta, color: C.white }}
+            >
+              {drawerLoading ? (
+                <><Loader2 className="h-4 w-4 animate-spin" /> Loading…</>
+              ) : 'Load leads'}
+            </Button>
+
+            {drawerLoading && (
+              <div className="flex items-center justify-center py-10">
+                <Loader2 className="h-6 w-6 animate-spin" style={{ color: C.accent }} />
+              </div>
+            )}
+
+            {!drawerLoading && drawerLoaded && (
+              <div className="space-y-3">
+                <div className="overflow-x-auto rounded-lg border" style={{ borderColor: C.border }}>
+                  <table className="w-full text-sm" style={{ color: C.body }}>
+                    <thead>
+                      <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                        {['Name', 'Email', 'Result', 'Date'].map((h) => (
+                          <th key={h} className="text-left px-3 py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {drawerLeads.map((l) => (
+                        <tr key={l.id} style={{ borderBottom: `1px solid ${C.border}` }}>
+                          <td className="px-3 py-2">{[l.first_name, l.last_name].filter(Boolean).join(' ') || '—'}</td>
+                          <td className="px-3 py-2 font-medium" style={{ color: C.white }}>{l.email}</td>
+                          <td className="px-3 py-2 text-xs">{l.result_type || '—'}</td>
+                          <td className="px-3 py-2 text-xs">{l.created_at ? new Date(l.created_at).toLocaleDateString() : '—'}</td>
+                        </tr>
+                      ))}
+                      {drawerLeads.length === 0 && (
+                        <tr><td colSpan={4} className="px-3 py-6 text-center text-xs" style={{ color: C.muted }}>No leads found</td></tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="text-xs" style={{ color: C.muted }}>
+                  Showing {drawerLeads.length} of {drawerTotal} leads
+                </div>
+
+                {drawerTotal > 50 && (
+                  <div className="text-xs rounded-md p-3" style={{ backgroundColor: `${C.amber}15`, border: `1px solid ${C.amber}40`, color: C.amber }}>
+                    Limited to 50 most recent for GDPR compliance. The client can view their full leads in their own dashboard.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
