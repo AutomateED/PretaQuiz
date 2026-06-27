@@ -1,6 +1,17 @@
+import { Link } from 'react-router-dom';
+
 const Terms = () => (
-  <div className="min-h-screen bg-background py-16 px-4">
-    <div className="mx-auto max-w-3xl prose prose-sm text-foreground">
+  <div className="min-h-screen bg-background">
+    <header className="bg-background">
+      <div className="max-w-6xl mx-auto px-5 h-16 flex items-center">
+        <Link to="/" className="text-xl font-bold hover:opacity-85 transition-opacity">
+          <span className="text-white">Preta</span>
+          <span style={{ color: '#D946EF' }}>Quiz</span>
+        </Link>
+      </div>
+    </header>
+    <div className="py-16 px-4">
+      <div className="mx-auto max-w-3xl prose prose-sm text-foreground">
       <h1 className="text-3xl font-bold mb-8">Terms &amp; Conditions</h1>
       <p className="text-muted-foreground text-sm mb-6">Last updated: March 24, 2026</p>
 

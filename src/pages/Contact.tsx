@@ -76,20 +76,14 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: C.pageBg }}>
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 max-w-4xl mx-auto">
-        <Link to="/" className="text-[20px] font-bold tracking-tight">
-          <span style={{ color: '#FFFFFF' }}>Preta</span>
-          <span style={{ color: C.accent }}>Quiz</span>
-        </Link>
-        <Link
-          to="/"
-          className="flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-80"
-          style={{ color: C.supporting }}
-        >
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Link>
-      </nav>
+      <header>
+        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center">
+          <Link to="/" className="text-xl font-bold hover:opacity-85 transition-opacity">
+            <span className="text-white">Preta</span>
+            <span style={{ color: '#D946EF' }}>Quiz</span>
+          </Link>
+        </div>
+      </header>
 
       <main className="max-w-xl mx-auto px-6 py-12">
         {submitted ? (
