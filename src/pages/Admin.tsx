@@ -5,8 +5,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
   RefreshCw, Users, UserCheck, Target, AlertTriangle, DollarSign,
-  KeyRound, Mail, Trash2, ExternalLink, ChevronDown, Shield, ArchiveRestore, Archive,
+  KeyRound, Mail, Trash2, ExternalLink, ChevronDown, Shield, ArchiveRestore, Archive, Loader2,
 } from 'lucide-react';
+import {
+  Sheet, SheetContent, SheetHeader, SheetTitle,
+} from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -65,16 +68,13 @@ interface ClientRow {
   lead_count: number;
 }
 
-interface LeadRow {
+interface DrawerLead {
   id: string;
   first_name: string | null;
   last_name: string | null;
   email: string;
   result_type: string | null;
-  quiz_slug: string;
   created_at: string;
-  client_email: string | null;
-  client_business: string | null;
 }
 
 interface ArchivedRow {
@@ -94,8 +94,15 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<Stats | null>(null);
   const [clients, setClients] = useState<ClientRow[]>([]);
-  const [leads, setLeads] = useState<LeadRow[]>([]);
   const [archived, setArchived] = useState<ArchivedRow[]>([]);
+
+  // Per-client leads drawer (GDPR: load on demand, clear on close)
+  const [drawerClient, setDrawerClient] = useState<ClientRow | null>(null);
+  const [drawerReason, setDrawerReason] = useState('');
+  const [drawerLeads, setDrawerLeads] = useState<DrawerLead[]>([]);
+  const [drawerTotal, setDrawerTotal] = useState(0);
+  const [drawerLoading, setDrawerLoading] = useState(false);
+  const [drawerLoaded, setDrawerLoaded] = useState(false);
   // Grant access form
   const [grantEmail, setGrantEmail] = useState('');
   const [grantName, setGrantName] = useState('');
@@ -134,7 +141,7 @@ export default function Admin() {
       const data = await res.json();
       setStats(data.stats);
       setClients(data.clients);
-      setLeads(data.leads);
+      // leads are loaded per-client on demand via the drawer
       // Init notes
       const nm: Record<string, string> = {};
       data.clients.forEach((c: ClientRow) => { nm[c.id] = c.notes || ''; });
@@ -214,6 +221,46 @@ export default function Admin() {
       setTimeout(() => setSavedNotes((p) => ({ ...p, [clientId]: false })), 2000);
     } catch { /* silent */ }
   }, [adminAction]);
+
+  const openLeadsDrawer = useCallback((c: ClientRow) => {
+    setDrawerClient(c);
+    setDrawerReason('');
+    setDrawerLeads([]);
+    setDrawerTotal(0);
+    setDrawerLoaded(false);
+  }, []);
+
+  const closeLeadsDrawer = useCallback(() => {
+    setDrawerClient(null);
+    setDrawerReason('');
+    setDrawerLeads([]);
+    setDrawerTotal(0);
+    setDrawerLoaded(false);
+    setDrawerLoading(false);
+  }, []);
+
+  const loadClientLeads = useCallback(async () => {
+    if (!drawerClient || drawerReason.trim().length < 5) return;
+    setDrawerLoading(true);
+    try {
+      const headers = await getHeaders();
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-client-leads`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ client_id: drawerClient.id, reason: drawerReason.trim() }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      setDrawerLeads(data.leads || []);
+      setDrawerTotal(data.total_count ?? (data.leads?.length || 0));
+      setDrawerLoaded(true);
+    } catch (err: any) {
+      toast({ title: 'Failed to load leads', description: err.message, variant: 'destructive' });
+    } finally {
+      setDrawerLoading(false);
+    }
+  }, [drawerClient, drawerReason, getHeaders, toast]);
+
 
   if (authLoading || !user || user.email !== ADMIN_EMAIL) {
     return (
@@ -369,9 +416,14 @@ export default function Admin() {
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <span className="text-xs font-mono" style={{ color: c.lead_count > 0 ? '#22C55E' : 'rgba(255,255,255,0.6)' }}>
+                          <button
+                            type="button"
+                            onClick={() => openLeadsDrawer(c)}
+                            className="text-xs font-mono underline-offset-2 hover:underline"
+                            style={{ color: c.lead_count > 0 ? '#22C55E' : 'rgba(255,255,255,0.6)' }}
+                          >
                             {c.lead_count}
-                          </span>
+                          </button>
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-1">
@@ -505,42 +557,8 @@ export default function Admin() {
               </div>
             </div>
 
-            {/* Section 4 — Leads table */}
-            <div className="rounded-xl border overflow-hidden" style={{ backgroundColor: C.card, borderColor: C.border }}>
-              <div className="px-6 py-4 border-b" style={{ borderColor: C.border }}>
-                <h2 className="text-base font-bold" style={{ color: C.white }}>Leads ({leads.length})</h2>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm" style={{ color: C.body }}>
-                  <thead>
-                    <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                      {['Name', 'Email', 'Result', 'Quiz', 'Client', 'Date'].map((h) => (
-                        <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {leads.map((l) => (
-                      <tr key={l.id} style={{ borderBottom: `1px solid ${C.border}` }} className="hover:bg-white/5 transition-colors">
-                        <td className="px-4 py-3">{[l.first_name, l.last_name].filter(Boolean).join(' ') || '—'}</td>
-                        <td className="px-4 py-3 font-medium" style={{ color: C.white }}>{l.email}</td>
-                        <td className="px-4 py-3 text-xs">{l.result_type || '—'}</td>
-                        <td className="px-4 py-3">
-                          <a href={`/quiz/${l.quiz_slug}`} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 text-xs" style={{ color: C.accent }}>
-                            {l.quiz_slug}
-                          </a>
-                        </td>
-                        <td className="px-4 py-3 text-xs">{l.client_business || l.client_email || '—'}</td>
-                        <td className="px-4 py-3 text-xs">{l.created_at ? new Date(l.created_at).toLocaleDateString() : '—'}</td>
-                      </tr>
-                    ))}
-                    {leads.length === 0 && (
-                      <tr><td colSpan={6} className="px-4 py-8 text-center" style={{ color: C.muted }}>No leads yet</td></tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+
+
 
             {/* Section 6 — System health warnings */}
             {warningClients.length > 0 && (
@@ -632,6 +650,95 @@ export default function Admin() {
           </>
         )}
       </div>
+
+      <Sheet open={!!drawerClient} onOpenChange={(open) => { if (!open) closeLeadsDrawer(); }}>
+        <SheetContent
+          side="right"
+          className="sm:max-w-xl w-full overflow-y-auto"
+          style={{ backgroundColor: C.card, borderColor: C.border, color: C.body }}
+        >
+          <SheetHeader>
+            <SheetTitle style={{ color: C.white }}>
+              Leads for {drawerClient?.business_name || drawerClient?.email || ''}
+            </SheetTitle>
+          </SheetHeader>
+
+          <div className="mt-6 space-y-4">
+            <div>
+              <Label className="text-xs" style={{ color: C.muted }}>
+                Reason for accessing (logged for GDPR compliance) *
+              </Label>
+              <Textarea
+                value={drawerReason}
+                onChange={(e) => setDrawerReason(e.target.value.slice(0, 500))}
+                maxLength={500}
+                rows={3}
+                placeholder="e.g. customer support request, billing investigation…"
+                className="mt-1 resize-none text-sm"
+                style={{ backgroundColor: C.bg, borderColor: C.border, color: C.white }}
+              />
+              <div className="mt-1 text-xs text-right" style={{ color: C.muted }}>
+                {drawerReason.length}/500
+              </div>
+            </div>
+
+            <Button
+              onClick={loadClientLeads}
+              disabled={drawerReason.trim().length < 5 || drawerLoading}
+              style={{ backgroundColor: C.cta, color: C.white }}
+            >
+              {drawerLoading ? (
+                <><Loader2 className="h-4 w-4 animate-spin" /> Loading…</>
+              ) : 'Load leads'}
+            </Button>
+
+            {drawerLoading && (
+              <div className="flex items-center justify-center py-10">
+                <Loader2 className="h-6 w-6 animate-spin" style={{ color: C.accent }} />
+              </div>
+            )}
+
+            {!drawerLoading && drawerLoaded && (
+              <div className="space-y-3">
+                <div className="overflow-x-auto rounded-lg border" style={{ borderColor: C.border }}>
+                  <table className="w-full text-sm" style={{ color: C.body }}>
+                    <thead>
+                      <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                        {['Name', 'Email', 'Result', 'Date'].map((h) => (
+                          <th key={h} className="text-left px-3 py-2 text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {drawerLeads.map((l) => (
+                        <tr key={l.id} style={{ borderBottom: `1px solid ${C.border}` }}>
+                          <td className="px-3 py-2">{[l.first_name, l.last_name].filter(Boolean).join(' ') || '—'}</td>
+                          <td className="px-3 py-2 font-medium" style={{ color: C.white }}>{l.email}</td>
+                          <td className="px-3 py-2 text-xs">{l.result_type || '—'}</td>
+                          <td className="px-3 py-2 text-xs">{l.created_at ? new Date(l.created_at).toLocaleDateString() : '—'}</td>
+                        </tr>
+                      ))}
+                      {drawerLeads.length === 0 && (
+                        <tr><td colSpan={4} className="px-3 py-6 text-center text-xs" style={{ color: C.muted }}>No leads found</td></tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="text-xs" style={{ color: C.muted }}>
+                  Showing {drawerLeads.length} of {drawerTotal} leads
+                </div>
+
+                {drawerTotal > 50 && (
+                  <div className="text-xs rounded-md p-3" style={{ backgroundColor: `${C.amber}15`, border: `1px solid ${C.amber}40`, color: C.amber }}>
+                    Limited to 50 most recent for GDPR compliance. The client can view their full leads in their own dashboard.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

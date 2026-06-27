@@ -152,6 +152,36 @@ export type Database = {
         }
         Relationships: []
       }
+      data_access_log: {
+        Row: {
+          action: string
+          admin_email: string
+          client_id: string | null
+          created_at: string
+          id: string
+          lead_count: number | null
+          reason: string | null
+        }
+        Insert: {
+          action: string
+          admin_email: string
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          lead_count?: number | null
+          reason?: string | null
+        }
+        Update: {
+          action?: string
+          admin_email?: string
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          lead_count?: number | null
+          reason?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           answers: Json | null
