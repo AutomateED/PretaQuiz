@@ -15,14 +15,17 @@ export default function Welcome() {
 
   return (
     <div
-      className="flex min-h-screen flex-col items-center justify-center px-4"
+      className="relative flex min-h-screen flex-col items-center justify-center px-4"
       style={{ backgroundColor: '#0F0A1E' }}
     >
-      {/* Logo */}
-      <Link to="/" className="mb-10 text-[24px] font-bold tracking-tight">
-        <span className="text-white">Preta</span>
-        <span style={{ color: '#D946EF' }}>Quiz</span>
-      </Link>
+      <header className="absolute top-0 left-0 right-0" style={{ backgroundColor: '#0F0A1E' }}>
+        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center">
+          <Link to="/" className="text-xl font-bold hover:opacity-85 transition-opacity">
+            <span className="text-white">Preta</span>
+            <span style={{ color: '#D946EF' }}>Quiz</span>
+          </Link>
+        </div>
+      </header>
 
       <motion.div
         initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
