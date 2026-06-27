@@ -106,19 +106,25 @@ export default function CookieConsent() {
               <div className="mt-3 flex items-center gap-2">
                 <Button
                   size="sm"
+                  variant="outline"
+                  onClick={decline}
+                  className="text-xs font-semibold"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#FFFFFF',
+                    borderColor: 'rgba(255,255,255,0.25)',
+                  }}
+                >
+                  Decline
+                </Button>
+                <Button
+                  size="sm"
                   onClick={accept}
                   className="text-xs font-semibold"
                   style={{ backgroundColor: 'hsl(var(--accent))', color: '#FFFFFF' }}
                 >
                   Accept
                 </Button>
-                <button
-                  onClick={decline}
-                  className="rounded-md px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-80"
-                  style={{ color: 'rgba(255,255,255,0.6)' }}
-                >
-                  Decline
-                </button>
               </div>
             </div>
           </div>
