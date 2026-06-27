@@ -55,15 +55,7 @@ const Privacy = () => (
       </ul>
       <p>We do not sell, rent, or share your data with any other third party.</p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">7. How Long We Keep Data</h2>
-      <ul className="list-disc pl-6 space-y-1">
-        <li><strong>Active accounts:</strong> Data is retained while your account is active.</li>
-        <li><strong>Deleted accounts:</strong> All data is permanently deleted.</li>
-        <li><strong>Payment records:</strong> Retained by Stripe in accordance with their data retention policy.</li>
-        <li><strong>Analytics:</strong> GA4 retains data for 14 months.</li>
-      </ul>
-
-      <h2 className="text-xl font-semibold mt-8 mb-3">8. AI features</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">7. AI features</h2>
       <p>PretaQuiz includes an in-dashboard help assistant (HelpChat) that uses third-party AI providers to answer your questions about the product.</p>
       <p>When you send a message in HelpChat, your message text is sent to Anthropic (Claude) and may also be processed by OpenAI. These providers process your message only to generate a response and return it to you.</p>
       <p>What this means in practice:</p>
@@ -74,6 +66,24 @@ const Privacy = () => (
         <li>The AI providers we use act as sub-processors. See our <Link to="/dpa" className="text-primary hover:underline">Data Processing Agreement</Link> for the full list.</li>
         <li>You can choose not to use HelpChat at any time. The rest of PretaQuiz works exactly the same without it.</li>
       </ul>
+
+      <h2 className="text-xl font-semibold mt-8 mb-3">8. Data retention</h2>
+      <p>We keep personal data only for as long as we need it to provide the service or meet our legal obligations.</p>
+
+      <h3 className="text-lg font-semibold mt-6 mb-2">Account data (clients)</h3>
+      <p>While your PretaQuiz account is active, we retain your account details (email, business name, brand settings, quiz configuration) so you can continue using the service. If you close your account, we retain this data for 30 days after closure to allow for account recovery and to handle any final billing or support matters. After 30 days, your account data is permanently deleted, except where we are legally required to keep records (for example, invoices and payment records, which we retain for the period required by tax law).</p>
+
+      <h3 className="text-lg font-semibold mt-6 mb-2">Lead data (end-users who take a quiz)</h3>
+      <p>Lead data (name, email, quiz answers, result type) is retained while the PretaQuiz account that collected it is active. If the account is closed, lead data is deleted within 30 days of account closure. You can also delete individual leads from your dashboard at any time. Once a lead is deleted, it is removed from our active database within 30 days.</p>
+
+      <h3 className="text-lg font-semibold mt-6 mb-2">HelpChat messages</h3>
+      <p>Messages you send to HelpChat are retained for up to 90 days for service quality and abuse prevention. They are not used to train AI models.</p>
+
+      <h3 className="text-lg font-semibold mt-6 mb-2">Backups</h3>
+      <p>Deleted data may persist in encrypted backups for up to 30 additional days before being overwritten in the normal backup rotation. Backups are not accessed except in the event of a disaster recovery scenario.</p>
+
+      <h3 className="text-lg font-semibold mt-6 mb-2">Your rights</h3>
+      <p>You can request deletion of your data at any time by emailing <a href="mailto:hello@pretaquiz.com" className="text-primary hover:underline">hello@pretaquiz.com</a>. We will respond within 30 days as required by GDPR.</p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">9. Your Rights Under GDPR</h2>
       <p>You have the right to:</p>
