@@ -512,42 +512,8 @@ export default function Admin() {
               </div>
             </div>
 
-            {/* Section 4 — Leads table */}
-            <div className="rounded-xl border overflow-hidden" style={{ backgroundColor: C.card, borderColor: C.border }}>
-              <div className="px-6 py-4 border-b" style={{ borderColor: C.border }}>
-                <h2 className="text-base font-bold" style={{ color: C.white }}>Leads ({leads.length})</h2>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm" style={{ color: C.body }}>
-                  <thead>
-                    <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                      {['Name', 'Email', 'Result', 'Quiz', 'Client', 'Date'].map((h) => (
-                        <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {leads.map((l) => (
-                      <tr key={l.id} style={{ borderBottom: `1px solid ${C.border}` }} className="hover:bg-white/5 transition-colors">
-                        <td className="px-4 py-3">{[l.first_name, l.last_name].filter(Boolean).join(' ') || '—'}</td>
-                        <td className="px-4 py-3 font-medium" style={{ color: C.white }}>{l.email}</td>
-                        <td className="px-4 py-3 text-xs">{l.result_type || '—'}</td>
-                        <td className="px-4 py-3">
-                          <a href={`/quiz/${l.quiz_slug}`} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 text-xs" style={{ color: C.accent }}>
-                            {l.quiz_slug}
-                          </a>
-                        </td>
-                        <td className="px-4 py-3 text-xs">{l.client_business || l.client_email || '—'}</td>
-                        <td className="px-4 py-3 text-xs">{l.created_at ? new Date(l.created_at).toLocaleDateString() : '—'}</td>
-                      </tr>
-                    ))}
-                    {leads.length === 0 && (
-                      <tr><td colSpan={6} className="px-4 py-8 text-center" style={{ color: C.muted }}>No leads yet</td></tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+
+
 
             {/* Section 6 — System health warnings */}
             {warningClients.length > 0 && (
