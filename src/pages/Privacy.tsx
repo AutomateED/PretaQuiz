@@ -54,7 +54,19 @@ const Privacy = () => (
         <li><strong>Analytics:</strong> GA4 retains data for 14 months.</li>
       </ul>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">8. Your Rights Under GDPR</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">8. AI features</h2>
+      <p>PretaQuiz includes an in-dashboard help assistant (HelpChat) that uses third-party AI providers to answer your questions about the product.</p>
+      <p>When you send a message in HelpChat, your message text is sent to Anthropic (Claude) and may also be processed by OpenAI. These providers process your message only to generate a response and return it to you.</p>
+      <p>What this means in practice:</p>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>Your HelpChat messages are not used to train AI models.</li>
+        <li>Lead data is never sent to AI providers. HelpChat only sees the message you type and general context about the PretaQuiz product — not your leads, your quiz answers, or your customers' personal data.</li>
+        <li>HelpChat is only available inside the logged-in dashboard. It is not part of the public quiz experience your leads see.</li>
+        <li>The AI providers we use act as sub-processors. See our <Link to="/dpa" className="text-primary hover:underline">Data Processing Agreement</Link> for the full list.</li>
+        <li>You can choose not to use HelpChat at any time. The rest of PretaQuiz works exactly the same without it.</li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mt-8 mb-3">9. Your Rights Under GDPR</h2>
       <p>You have the right to:</p>
       <ul className="list-disc pl-6 space-y-1">
         <li>Access your personal data</li>
@@ -68,11 +80,11 @@ const Privacy = () => (
       <p>To exercise any of these rights, contact <a href="mailto:hello@pretaquiz.com" className="text-primary hover:underline">hello@pretaquiz.com</a>. We will respond within 30 days.</p>
       <p><strong>For prospects:</strong> Please contact the quiz creator directly. Alternatively, email us and we will forward or action the request on your behalf.</p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">9. Cookies</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">10. Cookies</h2>
       <p><strong>Essential cookies</strong> (session management, consent preference) do not require consent and are always active.</p>
       <p><strong>Analytics cookies</strong> (GA4, Meta Pixel) are only loaded after you click "Accept" on the cookie banner. Clicking "Decline" means no tracking scripts are loaded. You can clear your cookies at any time to reset your preference.</p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">10. Data Security</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">11. Data Security</h2>
       <ul className="list-disc pl-6 space-y-1">
         <li>All data transmitted via HTTPS with TLS encryption</li>
         <li>Database secured with Supabase Row Level Security (RLS)</li>
@@ -82,13 +94,13 @@ const Privacy = () => (
       </ul>
       <p>In the event of a data breach, we will notify affected users within 72 hours.</p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">11. Children</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">12. Children</h2>
       <p>PretaQuiz is not intended for use by anyone under the age of 16. We do not knowingly collect personal data from children.</p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">12. Changes to This Policy</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">13. Changes to This Policy</h2>
       <p>We may update this Privacy Policy from time to time. Material changes will be notified by email to registered clients.</p>
 
-      <h2 className="text-xl font-semibold mt-8 mb-3">13. Contact and Complaints</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-3">14. Contact and Complaints</h2>
       <p>For any questions or concerns about this policy, contact: <a href="mailto:hello@pretaquiz.com" className="text-primary hover:underline">hello@pretaquiz.com</a></p>
       <p>You also have the right to lodge a complaint with the French data protection authority, CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">www.cnil.fr</a>).</p>
 
