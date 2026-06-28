@@ -57,8 +57,6 @@ const App = () => (
             <Route path="/waitlist" element={<Waitlist />} />
             <Route path="/blog" element={<BlogIndex />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            {/* Redirect old template URLs to get-started */}
-            <Route path="/templates/*" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
