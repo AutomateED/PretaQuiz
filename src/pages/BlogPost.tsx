@@ -50,13 +50,18 @@ export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<Post | null | undefined>(undefined);
 
+  // Valid slugs are lowercase alphanumerics and hyphens only.
+  // This rejects literal ":slug", encoded ":" / "%3A", and any other malformed value
+  // synchronously so we never hit Supabase or flash a loader for bogus URLs.
+  const isValidSlug = !!slug && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
+
   useEffect(() => {
-    if (!slug) { setPost(null); return; }
+    if (!isValidSlug) { setPost(null); return; }
 
     supabase
       .from('blog_posts')
       .select('title, slug, date, content, published')
-      .eq('slug', slug)
+      .eq('slug', slug as string)
       .maybeSingle()
       .then(({ data }) => {
         if (data) {
@@ -66,7 +71,11 @@ export default function BlogPost() {
           setPost(staticPost || null);
         }
       });
-  }, [slug]);
+  }, [slug, isValidSlug]);
+
+  if (!isValidSlug) return <Navigate to="/blog" replace />;
+
+
 
   if (post === undefined) {
     return (
