@@ -168,7 +168,7 @@ export default function Branding({ config, onConfigChange, userId, quizId }: Bra
                 }}
               >
                 <p className="text-xs font-medium mb-2" style={{ color: '#9A8EAA' }}>{opt.label}</p>
-                <p className="leading-snug" style={{ fontFamily: `'${opt.family}', ${opt.fallback}`, fontSize: 24, color: 'rgba(255,255,255,0.90)' }}>
+                <p className="leading-snug" style={{ fontFamily: `'${opt.family}', ${opt.fallback}`, fontSize: 24, color: '#0F0A1E' }}>
                   What's Really Holding Your Business Back?
                 </p>
               </button>
